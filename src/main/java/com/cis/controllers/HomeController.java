@@ -14,8 +14,7 @@ public class HomeController {
 	@GetMapping("/")
 	public String sigup() {
 		
-		
-		
+
 		return "hello world";
 		
 	}
