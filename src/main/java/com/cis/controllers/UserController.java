@@ -24,12 +24,14 @@ public class UserController {
 	@PostMapping("/signup")
 	public ApiResponse sigup(@RequestBody User user) throws Exception {
 		
+		
+		
 		try {
 			userService.save(user);
 			res.setMsg("Signup Successfull !");
 	 		res.getData().put("user", user);
 			res.setStatus(Status.success);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			
 		res.getData().put("user", user);
 		res.setMsg(e.getMessage());
