@@ -8,6 +8,8 @@ public class ApiResponse {
 	String msg = "Empty message";
 	Map<String, Object> data = new HashMap<>();
 	Status status = Status.failed;
+	
+	 
 	public String getMsg() {
 		return msg;
 	}

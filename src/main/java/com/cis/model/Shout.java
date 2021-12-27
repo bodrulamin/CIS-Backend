@@ -1,7 +1,6 @@
 package com.cis.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,7 +56,11 @@ public class Shout {
 
 	public void setCategory(Category category) {
 		this.category = category;
+		
+		
 	}
+	
+	
 
 	public String getShoutmessage() {
 		return shoutmessage;
@@ -74,6 +77,7 @@ public class Shout {
 		this.actionTaker = actionTaker;
 		this.category = category;
 		this.shoutmessage = shoutmessage;
+		 
 	}
     
 	

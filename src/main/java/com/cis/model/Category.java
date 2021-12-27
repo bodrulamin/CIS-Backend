@@ -8,7 +8,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Category {
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	long id;
@@ -16,8 +17,9 @@ public class Category {
 	@Column(unique = true,nullable = false)
 	String name;
 	
-	long shoutcount;
-
+	 
+	
+ 	
 	public long getId() {
 		return id;
 	}
@@ -34,24 +36,10 @@ public class Category {
 		this.name = name;
 	}
 
-	public long getShoutcount() {
-		return shoutcount;
-	}
-
-	public void setShoutcount(long shoutcount) {
-		this.shoutcount = shoutcount;
-	}
-
-	public Category(long id, String name, long shoutcount) {
+	public Category(long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.shoutcount = shoutcount;
 	}
-
-
-	
-	
-	
 	
 }
