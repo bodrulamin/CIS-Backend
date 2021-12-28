@@ -14,12 +14,15 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	long id;
 	
-	@Column(unique = true,nullable = false)
+	@Column(unique = true, nullable = false)
 	String name;
 	
-	 
-	
+	  
  	
+	public Category() {
+	 
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -37,8 +40,7 @@ public class Category {
 	}
 
 	public Category(long id, String name) {
-		super();
-		this.id = id;
+ 		this.id = id;
 		this.name = name;
 	}
 	
