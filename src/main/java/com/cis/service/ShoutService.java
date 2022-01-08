@@ -9,7 +9,7 @@ import com.cis.model.Shout;
 
 
 @Repository
-public interface CategoryService extends CrudRepository<Category, Long>{
+public interface ShoutService extends CrudRepository<Shout, Long>{
 
 	
 
