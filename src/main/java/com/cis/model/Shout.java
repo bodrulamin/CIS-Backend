@@ -9,18 +9,19 @@ public class Shout {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	long id;	
 	long shouterId;
-    
     long  actionTakerId;
-    
     long categoryId;
-    
+    String shoutTitle;
     String shoutmessage;
+    
+    
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public long getShouterId() {
 		return shouterId;
 	}
@@ -38,6 +39,15 @@ public class Shout {
 	}
 	public void setCategoryId(long categoryId) {
 		this.categoryId = categoryId;
+	}
+	
+	
+	
+	public String getShoutTitle() {
+		return shoutTitle;
+	}
+	public void setShoutTitle(String shoutTitle) {
+		this.shoutTitle = shoutTitle;
 	}
 	public String getShoutmessage() {
 		return shoutmessage;
