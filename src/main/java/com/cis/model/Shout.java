@@ -1,28 +1,25 @@
 package com.cis.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-//@Entity
+@Entity
 public class Shout {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	long id;	
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn()
-	User shouter;
+	long shouterId;
     
-    @JoinColumn()
-    User actionTaker;
+    long  actionTakerId;
     
-    @JoinColumn(name = "categoryid")
-    Category category;
+    long categoryId;
     
     String shoutmessage;
 
@@ -34,33 +31,29 @@ public class Shout {
 		this.id = id;
 	}
 
-	public User getShouter() {
-		return shouter;
+	public long getShouterId() {
+		return shouterId;
 	}
 
-	public void setShouter(User shouter) {
-		this.shouter = shouter;
+	public void setShouterId(long shouterId) {
+		this.shouterId = shouterId;
 	}
 
-	public User getActionTaker() {
-		return actionTaker;
+	public long getActionTakerId() {
+		return actionTakerId;
 	}
 
-	public void setActionTaker(User actionTaker) {
-		this.actionTaker = actionTaker;
+	public void setActionTakerId(long actionTakerId) {
+		this.actionTakerId = actionTakerId;
 	}
 
-	public Category getCategory() {
-		return category;
+	public long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
-		
-		
+	public void setCategoryId(long categoryId) {
+		this.categoryId = categoryId;
 	}
-	
-	
 
 	public String getShoutmessage() {
 		return shoutmessage;
@@ -70,15 +63,18 @@ public class Shout {
 		this.shoutmessage = shoutmessage;
 	}
 
-	public Shout(long id, User shouter, User actionTaker, Category category, String shoutmessage) {
+	public Shout(long id, long shouterId, long actionTakerId, long categoryId, String shoutmessage) {
 		super();
 		this.id = id;
-		this.shouter = shouter;
-		this.actionTaker = actionTaker;
-		this.category = category;
+		this.shouterId = shouterId;
+		this.actionTakerId = actionTakerId;
+		this.categoryId = categoryId;
 		this.shoutmessage = shoutmessage;
-		 
 	}
-    
+
+	public Shout() {
+		super();
+	}
+
 	
 }
