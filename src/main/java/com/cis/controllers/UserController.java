@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cis.mail.EmailService;
 import com.cis.model.ApiResponse;
 import com.cis.model.Status;
 import com.cis.model.User;
@@ -21,6 +22,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	EmailService emailService;
 
 	ApiResponse res = new ApiResponse();
 
@@ -32,6 +36,8 @@ public class UserController {
 			userService.save(user);
 			res.setMsg("Signup Successfull !");
 			res.setStatus(Status.success);
+			
+			emailService.sendSimpleMessage(user.getEmail(), "Sign up successful", "Congratulations Sign up successfull");
 
 		} catch (Exception ex) {
 			res.setStatus(Status.failed);

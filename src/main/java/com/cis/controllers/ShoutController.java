@@ -1,6 +1,7 @@
 package com.cis.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +13,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cis.mail.EmailService;
 import com.cis.model.ApiResponse;
 import com.cis.model.Shout;
 import com.cis.model.Status;
- import com.cis.service.ShoutService;
+import com.cis.model.User;
+import com.cis.model.UserType;
+import com.cis.service.ShoutService;
+import com.cis.service.UserService;
 
 @RestController
 @RequestMapping("/shout")
 @CrossOrigin(value = "http://localhost:4200", maxAge = 3600)
 public class ShoutController {
 
+	
 
 
 	@Autowired
 	private ShoutService shoutService;
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	EmailService emailService;
 
 	ApiResponse res = new ApiResponse();
 
@@ -37,6 +48,13 @@ public class ShoutController {
 			shoutService.save(shout);
 			res.setMsg("Shout aded Successfuly !");
 			res.setStatus(Status.success);
+			
+			List<User> userstosendmail = userService.getAllUser(UserType.provider);
+			
+			emailService.sendSimpleMessage(
+					userstosendmail.stream().map(u->u.getEmail()).collect(Collectors.joining(",")),
+			shout.getShoutTitle(), 
+			shout.getShoutmessage());
 
 		} catch (Exception ex) {
 			res.setStatus(Status.failed);
