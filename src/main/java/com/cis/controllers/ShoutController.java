@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.yaml.snakeyaml.emitter.Emitable;
 
 import com.cis.mail.EmailService;
 import com.cis.model.ApiResponse;
@@ -46,13 +47,23 @@ public class ShoutController {
 
 		try {
 			shoutService.save(shout);
-			res.setMsg("Shout aded Successfuly !");
+			res.setMsg("Shout added Successfuly !");
 			res.setStatus(Status.success);
 			
 			List<User> userstosendmail = userService.getAllUser(UserType.provider);
 			
+			String[] emails =   userstosendmail.
+					stream()
+					.map(u->u.getEmail())
+					.toArray(String[]::new);
+			for (String string : emails) {
+				System.out.println(string);
+			}
+			
+		 System.out.println(emails);
 			emailService.sendSimpleMessage(
-					userstosendmail.stream().map(u->u.getEmail()).collect(Collectors.joining(",")),
+					emails
+				,
 			shout.getShoutTitle(), 
 			shout.getShoutmessage());
 
