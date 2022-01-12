@@ -13,6 +13,8 @@ public class Shout {
     long categoryId;
     String shoutTitle;
     String shoutmessage;
+    String Address;
+    
     
     
 	public long getId() {
