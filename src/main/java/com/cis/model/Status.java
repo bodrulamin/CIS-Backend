@@ -5,5 +5,5 @@ public enum Status {
 }
 
 enum ShoutStatus{
-	pending, started, completed
+	draft, started, completed
 }

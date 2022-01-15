@@ -1,5 +1,7 @@
 package com.cis.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,46 +17,49 @@ public class Shout {
 	long actionTakerId;
 	long categoryId;
 	String shoutTitle;
-	private byte[] picByte;
-	
-	@Column(length = 800)
+	@Column(length = 1000)
 	String shoutmessage;
 	String address;
-	ShoutStatus status = ShoutStatus.pending;
+	ShoutStatus status = ShoutStatus.draft;
+	Date date;
+	private byte[] picByte;
 
 	public Shout() {
 
 	}
 
-	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public byte[] getPicByte() {
 		return picByte;
 	}
 
-
-
 	public void setPicByte(byte[] picByte) {
 		this.picByte = picByte;
 	}
 
+	
 
-
-	public Shout(long id, long shouterId, long actionTakerId, long categoryId, String shoutTitle, byte[] picByte,
-			String shoutmessage, String address, ShoutStatus status) {
+	public Shout(long id, long shouterId, long actionTakerId, long categoryId, String shoutTitle, String shoutmessage,
+			String address, ShoutStatus status, Date date, byte[] picByte) {
 		super();
 		this.id = id;
 		this.shouterId = shouterId;
 		this.actionTakerId = actionTakerId;
 		this.categoryId = categoryId;
 		this.shoutTitle = shoutTitle;
-		this.picByte = picByte;
 		this.shoutmessage = shoutmessage;
 		this.address = address;
 		this.status = status;
+		this.date = date;
+		this.picByte = picByte;
 	}
-
-
 
 	public long getId() {
 		return id;

@@ -27,13 +27,13 @@ public class ShoutController {
 
 	@Autowired
 	private ShoutService shoutService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
-	CrudRepository<Shout, Long>  repo;
-	
+	CrudRepository<Shout, Long> repo;
+
 	@Autowired
 	EmailService emailService;
 
@@ -47,23 +47,17 @@ public class ShoutController {
 			shoutService.save(shout);
 			res.setMsg("Shout added Successfuly !");
 			res.setStatus(Status.success);
-			
+
 			List<User> userstosendmail = userService.getAllUser(UserType.provider);
-			
-			String[] emails =   userstosendmail.
-					stream()
-					.map(u->u.getEmail())
-					.toArray(String[]::new);
+
+			String[] emails = userstosendmail.stream().map(u -> u.getEmail()).toArray(String[]::new);
 			for (String string : emails) {
 				System.out.println(string);
 			}
-			
-		 System.out.println(emails);
-			emailService.sendSimpleMessage(
-					emails
-				,
-			shout.getShoutTitle(), 
-			shout.getShoutmessage());
+
+			System.out.println(emails);
+
+			emailService.sendSimpleMessage(emails, shout.getShoutTitle(), shout.getShoutmessage());
 
 		} catch (Exception ex) {
 			res.setStatus(Status.failed);
@@ -77,8 +71,6 @@ public class ShoutController {
 		return res;
 
 	}
-
-	
 
 	@PostMapping("/update")
 	public ApiResponse update(@RequestBody Shout shout) throws Exception {
@@ -101,8 +93,7 @@ public class ShoutController {
 		return res;
 
 	}
-	
-	
+
 	@PostMapping("/delete")
 	public ApiResponse deleteShout(@RequestBody Shout shout) throws Exception {
 
@@ -111,7 +102,7 @@ public class ShoutController {
 			res.setMsg("Shout Deleted Successfuly !");
 			res.getData().put("shout", shout);
 			res.setStatus(Status.success);
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			res.getData().put("shout", shout);
 			res.setMsg(" failed to delete shout !");
 			res.setStatus(Status.failed);
@@ -120,16 +111,16 @@ public class ShoutController {
 		return res;
 
 	}
-	
+
 	@GetMapping("/getOne/{id}")
 	public ApiResponse getOne(@PathVariable(value = "id") long id) throws Exception {
 
 		try {
-		Shout shout =  shoutService.findById(id).get();
+			Shout shout = shoutService.findById(id).get();
 			res.setMsg("All shouts loaded Successfuly !");
 			res.getData().put("shout", shout);
 			res.setStatus(Status.success);
-		}   catch (Exception e) {
+		} catch (Exception e) {
 			res.getData().put("shout", null);
 			res.setMsg(e.getMessage());
 			res.setStatus(Status.failed);
@@ -138,16 +129,16 @@ public class ShoutController {
 		return res;
 
 	}
-	
+
 	@GetMapping("/getAll")
 	public ApiResponse getAll() throws Exception {
 
 		try {
-		List<Shout> cats =	(List<Shout>) shoutService.findAll();
+			List<Shout> cats = (List<Shout>) shoutService.findAll();
 			res.setMsg("All shouts loaded Successfuly !");
 			res.getData().put("shout", cats);
 			res.setStatus(Status.success);
-		}   catch (Exception e) {
+		} catch (Exception e) {
 			res.getData().put("shout", null);
 			res.setMsg(e.getMessage());
 			res.setStatus(Status.failed);
@@ -156,15 +147,16 @@ public class ShoutController {
 		return res;
 
 	}
+
 	@GetMapping("/getAll/{shouterId}")
 	public ApiResponse getAllOfShouterid(@PathVariable("shouterId") Long shouterId) throws Exception {
 
 		try {
-		List<Shout> cats =	(List<Shout>) shoutService.getShouts(shouterId);
+			List<Shout> cats = (List<Shout>) shoutService.getShouts(shouterId);
 			res.setMsg("All shouts loaded Successfuly !");
 			res.getData().put("shout", cats);
 			res.setStatus(Status.success);
-		}   catch (Exception e) {
+		} catch (Exception e) {
 			res.getData().put("shout", null);
 			res.setMsg(e.getMessage());
 			res.setStatus(Status.failed);
@@ -173,5 +165,5 @@ public class ShoutController {
 		return res;
 
 	}
-	
+
 }
