@@ -1,10 +1,9 @@
 package com.cis.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.yaml.snakeyaml.emitter.Emitable;
-
 import com.cis.mail.EmailService;
 import com.cis.model.ApiResponse;
 import com.cis.model.Shout;
@@ -28,13 +25,14 @@ import com.cis.service.UserService;
 @CrossOrigin(value = "http://localhost:4200", maxAge = 3600)
 public class ShoutController {
 
-	
-
-
 	@Autowired
 	private ShoutService shoutService;
+	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CrudRepository<Shout, Long>  repo;
 	
 	@Autowired
 	EmailService emailService;
@@ -158,6 +156,22 @@ public class ShoutController {
 		return res;
 
 	}
+	@GetMapping("/getAll/{shouterId}")
+	public ApiResponse getAllOfShouterid(@PathVariable("shouterId") Long shouterId) throws Exception {
 
+		try {
+		List<Shout> cats =	(List<Shout>) shoutService.getShouts(shouterId);
+			res.setMsg("All shouts loaded Successfuly !");
+			res.getData().put("shout", cats);
+			res.setStatus(Status.success);
+		}   catch (Exception e) {
+			res.getData().put("shout", null);
+			res.setMsg(e.getMessage());
+			res.setStatus(Status.failed);
+		}
+
+		return res;
+
+	}
 	
 }
