@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cis.mail.EmailService;
 import com.cis.model.ApiResponse;
 import com.cis.model.Shout;
+import com.cis.model.ShoutStatus;
 import com.cis.model.Status;
 import com.cis.model.User;
 import com.cis.model.UserType;
@@ -126,6 +127,27 @@ public class ShoutController {
 			res.setStatus(Status.failed);
 		}
 
+		return res;
+
+	}
+	@PostMapping("/updatestatus")
+	public ApiResponse updateStatus(@RequestBody Shout shout) throws Exception {
+		res.getData().put("shout", shout);
+
+		try {
+			shoutService.save(shout);
+			res.setMsg("Shout status updated Successfuly !");
+			res.setStatus(Status.success);
+
+		} catch (Exception ex) {
+			res.setStatus(Status.failed);
+			if (ex.getCause() instanceof ConstraintViolationException) {
+				res.setMsg("Shout already exists");
+			} else {
+				res.setMsg("Failed to add shout");
+			}
+
+		}
 		return res;
 
 	}

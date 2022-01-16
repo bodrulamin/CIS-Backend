@@ -4,6 +4,3 @@ public enum Status {
 	failed, success
 }
 
-enum ShoutStatus{
-	draft, started, completed
-}
