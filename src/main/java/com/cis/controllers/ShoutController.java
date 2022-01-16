@@ -130,6 +130,7 @@ public class ShoutController {
 		return res;
 
 	}
+
 	@PostMapping("/updatestatus")
 	public ApiResponse updateStatus(@RequestBody Shout shout) throws Exception {
 		res.getData().put("shout", shout);
@@ -138,6 +139,17 @@ public class ShoutController {
 			shoutService.save(shout);
 			res.setMsg("Shout status updated Successfuly !");
 			res.setStatus(Status.success);
+			User actionTaker = userService.findById(shout.getActionTakerId()).get();
+			User shouter = userService.findById(shout.getShouterId()).get();
+			if (shout.getStatus() == ShoutStatus.started) {
+				emailService.sendSimpleMessage(shouter.getEmail(), "Issue solving in progress by! " + actionTaker.getFullname(),
+						"Shout Title:" + shout.getShoutTitle() + '\n' + shout.getShoutmessage());
+
+			}else if(shout.getStatus() == ShoutStatus.completed) {
+				emailService.sendSimpleMessage(shouter.getEmail(), "Your issue is solved!",
+						"Shout Title:" + shout.getShoutTitle() + '\n' + shout.getShoutmessage());
+
+			}
 
 		} catch (Exception ex) {
 			res.setStatus(Status.failed);
@@ -170,11 +182,18 @@ public class ShoutController {
 
 	}
 
-	@GetMapping("/getAll/{shouterId}")
-	public ApiResponse getAllOfShouterid(@PathVariable("shouterId") Long shouterId) throws Exception {
+	@GetMapping("/getAll/{userId}")
+	public ApiResponse getAllOfShouterid(@PathVariable("userId") Long userId) throws Exception {
+		List<Shout> cats = null;
+		User user = userService.findById(userId).get();
+		if (user.getUsertype() == UserType.provider) {
+			cats = (List<Shout>) shoutService.getShoutsOfProvider(user.getId());
 
+		} else if (user.getUsertype() == UserType.citizen) {
+			cats = (List<Shout>) shoutService.getShoutsOfShouter(user.getId());
+		}
 		try {
-			List<Shout> cats = (List<Shout>) shoutService.getShouts(shouterId);
+
 			res.setMsg("All shouts loaded Successfuly !");
 			res.getData().put("shout", cats);
 			res.setStatus(Status.success);

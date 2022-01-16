@@ -14,7 +14,10 @@ import com.cis.model.Shout;
 public interface ShoutService extends CrudRepository<Shout, Long>{
 	
 	@Query("select s from Shout s where s.shouterId = ?1")
-	public List<Shout> getShouts(long shouterId);
+	public List<Shout> getShoutsOfShouter(long shouterId);
+
+	@Query("select s from Shout s where s.categoryId in (select sub.categoryId From Subscription sub where sub.actionTakerId = ?1) ")
+	public List<Shout> getShoutsOfProvider(long providerId);
 	
 
 }
