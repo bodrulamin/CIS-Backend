@@ -142,7 +142,7 @@ public class ShoutController {
 			User actionTaker = userService.findById(shout.getActionTakerId()).get();
 			User shouter = userService.findById(shout.getShouterId()).get();
 			if (shout.getStatus() == ShoutStatus.started) {
-				emailService.sendSimpleMessage(shouter.getEmail(), "Issue solving in progress by! " + actionTaker.getFullname(),
+				emailService.sendSimpleMessage(shouter.getEmail(), "Issue solving in progress by " + actionTaker.getFullname(),
 						"Shout Title:" + shout.getShoutTitle() + '\n' + shout.getShoutmessage());
 
 			}else if(shout.getStatus() == ShoutStatus.completed) {
