@@ -1,3 +1,5 @@
 # Citizen Issue Solver
 
-**this is bold text **
+## Technology Used:
+    ### Backend : `Spring Boot`
+    ### Frontend : `MySQL`
