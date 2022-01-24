@@ -17,7 +17,7 @@ import com.cis.model.UserPayload;
 import com.cis.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
 	@Autowired
