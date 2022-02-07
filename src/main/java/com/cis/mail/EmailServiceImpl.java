@@ -8,8 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailServiceImpl implements EmailService {
 
+
+	private final JavaMailSender emailSender;
+
 	@Autowired
-	private JavaMailSender emailSender;
+	public EmailServiceImpl(JavaMailSender emailSender) {
+		this.emailSender = emailSender;
+	}
 
 	@Override
 	public void sendSimpleMessage(String to, String subject, String text) {

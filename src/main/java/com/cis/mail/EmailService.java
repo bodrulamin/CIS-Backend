@@ -1,5 +1,7 @@
 package com.cis.mail;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 public interface EmailService {
